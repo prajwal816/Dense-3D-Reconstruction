@@ -1,0 +1,62 @@
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# ── Virtual environments ─────────────────────────────────────────────────────
+venv/
+env/
+.venv/
+.env/
+
+# ── IDE / Editor ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# ── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Pipeline outputs ─────────────────────────────────────────────────────────
+outputs/
+benchmarks/*.json
+*.log
+
+# ── Model weights (large files) ─────────────────────────────────────────────
+models/*.pth
+models/*.pt
+models/*.onnx
+
+# ── Downloaded datasets (keep generated test data) ───────────────────────────
+data/south-building/
+data/gerrard-hall/
+data/fountain*/
+data/person-hall/
+data/*.zip
+data/*.7z
+data/*.tar.gz
+
+# ── C++ build ────────────────────────────────────────────────────────────────
+build/
+cmake-build-*/
+*.o
+*.a
+*.lib
+*.dll
+*.exe
+compile_commands.json
+
+# ── Jupyter ──────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/

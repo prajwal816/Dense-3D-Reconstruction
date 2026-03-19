@@ -159,6 +159,42 @@ models/
 
 ---
 
+## 📦 Datasets
+
+### Quick Start — Synthetic Test Data
+
+Generate synthetic multi-view images instantly (no downloads needed):
+
+```bash
+python scripts/generate_test_data.py --output data/images --num-views 8
+```
+
+This renders a 3D scene (cubes, sphere, ground plane) from orbiting cameras and saves ground-truth camera parameters for validation.
+
+### Public Datasets
+
+Download real-world multi-view datasets for proper benchmarking:
+
+```bash
+# List available datasets
+python scripts/download_dataset.py --list
+
+# Download COLMAP South Building (128 images, ~40 MB)
+python scripts/download_dataset.py --dataset south-building --output data/
+
+# Download COLMAP Gerrard Hall (100 images, ~30 MB)
+python scripts/download_dataset.py --dataset gerrard-hall --output data/
+```
+
+| Dataset | Images | Size | Scene |
+|---------|--------|------|-------|
+| `south-building` | 128 | ~40 MB | Outdoor building |
+| `gerrard-hall` | 100 | ~30 MB | Outdoor building |
+| `person-hall` | 330 | ~70 MB | Indoor hall |
+| `fountain` | 11 | ~8 MB | Outdoor fountain |
+
+---
+
 ## 🚀 Usage
 
 ### End-to-End Pipeline

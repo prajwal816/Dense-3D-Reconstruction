@@ -1,0 +1,103 @@
+# ============================================================================
+#  Dense Multi-View 3D Reconstruction Pipeline — Default Configuration
+# ============================================================================
+
+# ── Paths ────────────────────────────────────────────────────────────────────
+paths:
+  images: "data/images"
+  output: "outputs"
+  colmap_binary: "colmap"          # Path to COLMAP executable
+
+# ── Feature Extraction ───────────────────────────────────────────────────────
+features:
+  type: "sift"                     # sift | orb | superpoint
+  max_keypoints: 8192
+  sift:
+    n_features: 8192
+    n_octave_layers: 3
+    contrast_threshold: 0.04
+    edge_threshold: 10
+    sigma: 1.6
+  orb:
+    n_features: 5000
+    scale_factor: 1.2
+    n_levels: 8
+    edge_threshold: 31
+    patch_size: 31
+  superpoint:
+    weights: "models/superpoint_v1.pth"
+    nms_radius: 4
+    keypoint_threshold: 0.005
+    max_keypoints: 4096
+
+# ── Feature Matching ─────────────────────────────────────────────────────────
+matching:
+  type: "bf"                       # bf | flann | superglue
+  ratio_test: 0.75
+  cross_check: false
+  flann:
+    trees: 5
+    checks: 50
+  superglue:
+    weights: "models/superglue_outdoor.pth"
+    match_threshold: 0.2
+    sinkhorn_iterations: 20
+
+# ── Structure from Motion (SfM) ─────────────────────────────────────────────
+sfm:
+  use_colmap: true
+  camera_model: "SIMPLE_RADIAL"    # SIMPLE_PINHOLE | SIMPLE_RADIAL | RADIAL | OPENCV
+  single_camera: true
+  min_num_matches: 15
+  mapper:
+    init_min_tri_angle: 16.0
+    ba_refine_focal_length: true
+    ba_refine_extra_params: true
+
+# ── Multi-View Stereo (MVS) ─────────────────────────────────────────────────
+mvs:
+  enabled: true
+  use_colmap: true
+  patch_match:
+    max_image_size: 2000
+    window_radius: 5
+    num_iterations: 5
+    geom_consistency: true
+  fusion:
+    min_num_pixels: 5
+    max_reproj_error: 2.0
+    max_depth_error: 0.01
+
+# ── Reconstruction ───────────────────────────────────────────────────────────
+reconstruction:
+  mesh_method: "poisson"           # poisson | ball_pivoting
+  poisson:
+    depth: 9
+    width: 0
+    scale: 1.1
+    linear_fit: false
+  ball_pivoting:
+    radii: [0.005, 0.01, 0.02, 0.04]
+  point_cloud:
+    voxel_size: 0.005
+    nb_neighbors: 20
+    std_ratio: 2.0
+  normal_estimation:
+    radius: 0.1
+    max_nn: 30
+
+# ── Visualization ────────────────────────────────────────────────────────────
+visualization:
+  enabled: true
+  window_width: 1920
+  window_height: 1080
+  point_size: 2.0
+  background_color: [0.1, 0.1, 0.1]
+  show_cameras: true
+  camera_scale: 0.3
+
+# ── Logging ──────────────────────────────────────────────────────────────────
+logging:
+  level: "INFO"                    # DEBUG | INFO | WARNING | ERROR
+  log_file: "outputs/pipeline.log"
+  colored: true
